@@ -1,0 +1,3 @@
+The shell commands `./configure; make; make install' should
+configure, build, and install this package.
+

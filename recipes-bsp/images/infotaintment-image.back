@@ -1,0 +1,42 @@
+DESCRIPTION = "Auto infotaintment image"
+
+include recipes-core/images/core-image-base.bb
+
+LICENSE = "MIT"
+
+# Add extra image features
+EXTRA_IMAGE_FEATURES += " \
+    ssh-server-dropbear "
+
+SOC_IMAGE_INSTALL = ""
+SOC_IMAGE_INSTALL_mx6 += "imx-gpu-viv"
+
+TEST_TOOLS_INSTALL = " \
+    packagegroup-fsl-tools-benchmark \
+    cpufrequtils i2c-tools mtd-utils u-boot-fw-utils imx-test \
+    alsa-utils alsa-utils-speakertest evtest \
+"
+
+# Gstreamer plugins needed in case we use Gstreamer to handle MPEGTS stream
+MM_IMAGE_INSTALL_mx6 = "packagegroup-fslc-gstreamer1.0-full\
+    ${COMMERCIAL_AUDIO_PLUGINS} \
+"
+
+WIRELESS_IMAGE_INSTALL = " \
+    iw \
+    wpa-supplicant \
+"
+
+IMAGE_INSTALL_append = " \
+    ${SOC_IMAGE_INSTALL} \
+    ${TEST_TOOLS_INSTALL} \
+    ${WIRELESS_IMAGE_INSTALL} \
+    ${MM_IMAGE_INSTALL} \
+    rpm \
+    tcpdump \
+    infotaintment-hmi \
+    libgles2-mx6 \
+    mtdev \
+"
+
+export IMAGE_BASENAME = "infotaintment-image"

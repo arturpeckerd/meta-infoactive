@@ -1,0 +1,19 @@
+#!/bin/sh
+
+width=1024
+height=768
+
+echo 0 > /sys/devices/soc0/fb@0/graphics/fb1/blank
+fbset -fb /dev/fb1 -g 1024 768 1024 768 32
+setalpha 0xFF /dev/fb1 1
+chromakey 0x0 /dev/fb1 1
+
+SBENGINE="/opt/linux-imx6yocto-armle-opengles_2.0-obj/bin/sbengine"
+OPTS="-omtdev,device=/dev/input/event0 -orender_mgr,display=1 -ogesture,mode=multi -ogreio,channel=input_data"
+#OPTS="-omtdev,device=/dev/input/event0 -orender_mgr,fb=/dev/fb1 -ogesture,mode=multi -ogreio,channel=input_data"
+#OPTS="-odev-input,mouse=/dev/input/event7  -oscreen_mgr,swcursor"
+export SB_PLUGINS=/opt/linux-imx6yocto-armle-opengles_2.0-obj/plugins
+export LD_LIBRARY_PATH=/opt/linux-imx6yocto-armle-opengles_2.0-obj/lib:$LD_LIBRARY_PATH
+
+$SBENGINE $OPTS /opt/crank/infoactive-hmi/infoactive-hmi.gapp &
+/opt/crank/bin/hmi-sbio &
