@@ -11,7 +11,7 @@ hmi_sbio_LDADD = -L@HOSTDIR@/@SB_LIB_DIR@
 hmi_sbio_servicedir = $(sysconfdir)/init.d
 hmi_sbio_service_SCRIPTS = hmi.sh
 
-bin_SCRIPTS = hmi
+#bin_SCRIPTS = hmi
 
 hmi_gappdir = "/opt/crank/infoactive-hmi"
 hmi_gapp_DATA = infoactive-hmi.gapp 
