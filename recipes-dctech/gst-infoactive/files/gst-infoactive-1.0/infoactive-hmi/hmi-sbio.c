@@ -20,7 +20,7 @@ static pthread_t ui_rcvqueue_thread;
 static mqd_t ui_sndqueue;
 static mqd_t ui_rcvqueue;
 static unsigned int ui_quit = 0;
-char song[256]="/home/root/Wildlife.mp4";
+
 typedef struct {
     long long int position;
     long long int length;
@@ -33,8 +33,8 @@ static void* ui_rcvqueue_process (void *param)
     gre_io_t *send_handle;
     gre_io_serialized_data_t *md_buffer = NULL;
     char msg[MAX_SIZE] = "";
-    char song_pos[32]="";
-    char song_len[32]="";
+    char song_pos[64]="";
+    char song_len[64]="";
     float pos_norm;
     ssize_t len;
     //track_msg_data_t track_data;
@@ -53,7 +53,7 @@ static void* ui_rcvqueue_process (void *param)
         msg[len] = '\0';
         printf("UI - received : %s\n", msg);
         if (strstr(msg, MSG_UI_POSITION_UPDATE)) {
-            sscanf(msg,"%*s %f %s %s",pos_norm, song_pos ,song_len );
+            sscanf(msg,"%*s %f %s %s",&pos_norm, &song_pos ,&song_len );
 
 	    md_buffer = gre_io_serialize(md_buffer, NULL,"INPUT_EVENT","4f1 pos", &pos_norm, sizeof(pos_norm));
 	    gre_io_send(send_handle, md_buffer);
@@ -130,7 +130,7 @@ int main(void) {
     attr.mq_maxmsg = 10;
     attr.mq_msgsize = MAX_SIZE;
     attr.mq_curmsgs = 0;
-    char cmd[128];
+    char cmd[MAX_SIZE];
 
     signal(SIGINT, signal_handler);  // CRTL-C or kill -INT
 
@@ -191,7 +191,7 @@ int main(void) {
             }else if(strcmp("pwr",(char *)revent_data) == 0){
                 printf("Power \n");
                 if (strstr((char *)&revent_data[4],"on" ))
-                    system("gst-infoactive %s",song);
+                    system("gst-infoactive /home/root/Wildlife.mp4 &");
                 if (strstr((char *)&revent_data[4],"off" )){
                     snprintf(cmd, sizeof(cmd), "MSG_UI pwr off");
                     mq_send(ui_sndqueue, cmd, strlen(cmd), 0);

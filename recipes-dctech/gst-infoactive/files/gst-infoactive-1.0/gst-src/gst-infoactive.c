@@ -37,13 +37,13 @@ static inline void element_make(GstElement **gst_element, gchar *factory_name, g
 
 static gboolean cb_print_position (GstElement *pipeline){
     gint64 pos;
-    char msg[64] = "";
+    char msg[MAX_SIZE] = "";
 
     if (gst_element_query_position (pipeline, GST_FORMAT_TIME, &pos)
                     && gst_element_query_duration (pipeline, GST_FORMAT_TIME, &len)) {
       //g_print ("Time: %" GST_TIME_FORMAT " / %" GST_TIME_FORMAT "\r", GST_TIME_ARGS (pos), GST_TIME_ARGS (len));
 
-      snprintf(msg, sizeof(msg), "%s %f %s %s",MSG_UI_POSITION_UPDATE, (float)pos/len, GST_TIME_ARGS (pos), GST_TIME_ARGS (len));
+      snprintf(msg, sizeof(msg), "%s %f %"GST_TIME_FORMAT" %"GST_TIME_FORMAT,MSG_UI_POSITION_UPDATE, (float)pos/len, GST_TIME_ARGS (pos), GST_TIME_ARGS (len));
       mq_send(ui_rcvqueue, msg, strlen(msg), 0);
   }
 
@@ -85,7 +85,7 @@ static void cb_new_pad (GstElement *element, GstPad *pad, GstElementsData *gstEl
 
 static void ui_queue_process_message(const char *message)
 {  
-    char cmd[32];
+    char cmd[MAX_SIZE];
     float pos_norm;
     gint64 time_pos;
 
@@ -101,7 +101,8 @@ static void ui_queue_process_message(const char *message)
             gst_element_set_state (gstElemData.pipeline, GST_STATE_PAUSED);
         }else if (strstr(cmd,"stop")){
             printf("Stop cmd\n");
-            gst_element_set_state (gstElemData.pipeline, GST_STATE_READY);
+            gst_element_set_state (gstElemData.pipeline, GST_STATE_NULL);
+            g_main_loop_quit (loop);
         }else if (strstr(cmd,"forward")){
             printf("Forward cmd\n");
         }else if (strstr(cmd,"backward")){
@@ -115,7 +116,7 @@ static void ui_queue_process_message(const char *message)
             printf("Seek_cmd\n");
             sscanf(message, "%*s %*s %f", &pos_norm);
             time_pos=pos_norm*(float)len;
-            printf("time pos: %lld\n", time_pos);
+            printf("msg: %s pos norm: %f time pos: %lld length: %lld \n", message, pos_norm,time_pos,len);
             if (!gst_element_seek (gstElemData.pipeline, 1.0, GST_FORMAT_TIME, GST_SEEK_FLAG_FLUSH | GST_SEEK_FLAG_KEY_UNIT,
                          GST_SEEK_TYPE_SET, time_pos,
                          GST_SEEK_TYPE_SET, len)){
@@ -242,7 +243,6 @@ int main (int argc, char *argv[]){
     /* we set the input filename to the source element */
     g_object_set(G_OBJECT (gstElemData.video_sink),"device","/dev/video16",NULL);
     g_object_set (G_OBJECT (gstElemData.source), "location", argv[1], NULL);
-
     /* we add a message handler */
     bus = gst_pipeline_get_bus (GST_PIPELINE (gstElemData.pipeline));
     bus_watch_id = gst_bus_add_watch (bus, bus_call, loop);
