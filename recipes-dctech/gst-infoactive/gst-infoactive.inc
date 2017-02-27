@@ -19,6 +19,9 @@ inherit autotools pkgconfig
 
 CFLAGS ="-I${STAGING_KERNEL_DIR}/include/uapi -I${STAGING_KERNEL_DIR}/include" 
 
+HMI_imx6qsabreauto = "hmi-auto"
+HMI_imx6qsabresd = "hmi-sd"
+
 do_install_append() {
         install -d ${D}/etc/rcS.d
 
@@ -27,7 +30,22 @@ do_install_append() {
         # binaries
 
         # management
+        install -m 755 ${S}/infoactive-hmi/${HMI} ${D}/${bindir}/hmi
         [ -h ${D}/etc/rcS.d/S90hmi ] || ln -s /etc/init.d/hmi.sh ${D}/etc/rcS.d/S90hmi
+
+        mkdir -p ${D}/usr/
+        mkdir -p ${D}/opt/crank/linux-imx6yocto-armle-opengles_2.0-obj
+        cp -a ${S}/linux-imx6yocto-armle-opengles_2.0-obj/bin ${D}/opt/crank/linux-imx6yocto-armle-opengles_2.0-obj
+        cp -a ${S}/linux-imx6yocto-armle-opengles_2.0-obj/lib ${D}/opt/crank/linux-imx6yocto-armle-opengles_2.0-obj
+        cp -a ${S}/linux-imx6yocto-armle-opengles_2.0-obj/include ${D}/usr/
+        cp -a ${S}/linux-imx6yocto-armle-opengles_2.0-obj/plugins ${D}/opt/crank/linux-imx6yocto-armle-opengles_2.0-obj
+}
+
+
+addtask printer
+do_printer (){
+    bbnote "machine:${MACHINE}"
+    bbnote "hmi:${HMI}"
 }
 
 PACKAGES = "${PN} ${PN}-dbg ${PN}-dev ${PN}-staticdev"
