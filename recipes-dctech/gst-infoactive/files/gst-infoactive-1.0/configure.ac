@@ -3,9 +3,9 @@
 
 #AC_PREREQ(2.60)
 AC_INIT(gst-infoactive, 0.1, carlos.garcia@nxp.com)
-AC_CONFIG_SRCDIR([gst-src/gst_infoactive.c])
+AC_CONFIG_SRCDIR([gst-src/gst-infoactive.c])
 #AC_CONFIG_HEADER([config.h])
-AM_INIT_AUTOMAKE(gst-src/gst_infoactive, main)
+AM_INIT_AUTOMAKE(gst-src/gst-infoactive, main)
 
 # Checks for programs.
 AC_PROG_CC

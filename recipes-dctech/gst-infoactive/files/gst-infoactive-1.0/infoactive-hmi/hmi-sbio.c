@@ -191,7 +191,7 @@ int main(void) {
             }else if(strcmp("pwr",(char *)revent_data) == 0){
                 printf("Power \n");
                 if (strstr((char *)&revent_data[4],"on" ))
-                    system("gst_infoactive %s",song);
+                    system("gst-infoactive %s",song);
                 if (strstr((char *)&revent_data[4],"off" )){
                     snprintf(cmd, sizeof(cmd), "MSG_UI pwr off");
                     mq_send(ui_sndqueue, cmd, strlen(cmd), 0);

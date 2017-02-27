@@ -213,8 +213,8 @@ int main (int argc, char *argv[]){
     loop = g_main_loop_new (NULL, FALSE);
 
     /* Check input arguments */
-    if (argc != 1) {
-        g_printerr ("Usage: %s \n", argv[0]);
+    if (argc != 2) {
+        g_printerr ("Usage: %s AudioFile\n", argv[0]);
         return -1;
     }
 

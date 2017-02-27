@@ -15,4 +15,4 @@ export SB_PLUGINS=/opt/crank/linux-imx6yocto-armle-opengles_2.0-obj/plugins
 export LD_LIBRARY_PATH=/opt/crank/linux-imx6yocto-armle-opengles_2.0-obj/lib:$LD_LIBRARY_PATH
 
 $SBENGINE $OPTS /opt/crank/infoactive-hmi/infoactive-hmi.gapp &
-/opt/crank/bin/hmi_sbio &
+/opt/crank/bin/hmi-sbio &

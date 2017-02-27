@@ -1,9 +1,9 @@
 
 hmi_sbio_bindir = "/opt/crank/bin"
-hmi_sbio_bin_PROGRAMS = hmi_sbio
+hmi_sbio_bin_PROGRAMS = hmi-sbio
 
-hmi_sbio_SOURCES = hmi_sbio.c
-hmi_sbio_CFLAGS = $(AM_CFLAGS) -I@HOSTDIR@/gst-src @DEFS@
+hmi_sbio_SOURCES = hmi-sbio.c
+hmi_sbio_CFLAGS = $(AM_CFLAGS) -I@HOSTDIR@/gst-src -I@HOSTDIR@/linux-imx6yocto-armle-opengles_2.0-obj/include @DEFS@
 hmi_sbio_CPPFLAGS =
 hmi_sbio_LDFLAGS = -lgreio -lpthread -lrt
 hmi_sbio_LDADD = -L@HOSTDIR@/@SB_LIB_DIR@ 
