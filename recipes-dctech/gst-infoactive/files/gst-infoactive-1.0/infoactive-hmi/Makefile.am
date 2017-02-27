@@ -8,8 +8,8 @@ hmi_sbio_CPPFLAGS =
 hmi_sbio_LDFLAGS = -lgreio -lpthread -lrt
 hmi_sbio_LDADD = -L@HOSTDIR@/@SB_LIB_DIR@ 
 
-hmi_sbio_servicedir = $(sysconfdir)/init.d
-hmi_sbio_service_SCRIPTS = hmi.sh
+#hmi_sbio_servicedir = $(sysconfdir)/init.d
+#hmi_sbio_service_SCRIPTS = hmi.sh
 
 #bin_SCRIPTS = hmi
 

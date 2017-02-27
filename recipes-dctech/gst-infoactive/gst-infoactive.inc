@@ -24,13 +24,14 @@ HMI_imx6qsabresd = "hmi-sd"
 
 do_install_append() {
         install -d ${D}/etc/rcS.d
-
+        install -d ${D}/etc/init.d
         # app
 
         # binaries
 
         # management
         install -m 755 ${S}/infoactive-hmi/${HMI} ${D}/${bindir}/hmi
+        install -m 755 ${S}/infoactive-hmi/hmi.sh ${D}/etc/init.d/hmi.sh
         [ -h ${D}/etc/rcS.d/S90hmi ] || ln -s /etc/init.d/hmi.sh ${D}/etc/rcS.d/S90hmi
 
         mkdir -p ${D}/usr/
