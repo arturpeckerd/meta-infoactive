@@ -1,0 +1,1 @@
+../../gst-infoactive-1.0/gst-src/gst_infoactive.c
