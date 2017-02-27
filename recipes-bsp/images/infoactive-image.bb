@@ -6,7 +6,7 @@ inherit core-image
 IMAGE_INSTALL += " libgcc ${ROOTFS_PKGMANAGE_BOOTSTRAP} ${CORE_IMAGE_EXTRA_INSTALL}"
 IMAGE_INSTALL += " jpeg libpng"
 IMAGE_INSTALL += " libgles2-mx6"
-IMAGE_INSTALL += " crank-engine infoactive-hmi gst-infoactive"
+IMAGE_INSTALL += " gst-infoactive"
 IMAGE_INSTALL += " libedit alsa-lib alsa-utils sqlite3"
 IMAGE_INSTALL += " packagegroup-fslc-gstreamer1.0-full"
 
