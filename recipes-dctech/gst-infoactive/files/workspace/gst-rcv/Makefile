@@ -5,9 +5,9 @@ MACHINE ?= `grep MACHINE $(BUILDDIR)/conf/local.conf | sed "s/.*\(imx6[a-z]*\).*
 SYSROOT ?= $(BUILDDIR)/tmp/sysroots/$(MACHINE)
 
 CC = $(PREFIX)/$(CROSS_COMPILE)gcc -march=armv7-a -mtune=cortex-a9 -mno-thumb-interwork -mfpu=neon -mfloat-abi=hard --sysroot $(SYSROOT)
-OBJECTS = gst_rcv.o
+OBJECTS = gst-rcv.o
 
-APP = gst_rcv
+APP = gst-rcv
 
 INC= -I../../gst-infoactive-1.0/gst-src
 LDADD = -lpthread -lrt 

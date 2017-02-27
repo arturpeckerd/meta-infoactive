@@ -5,9 +5,9 @@ MACHINE ?= `grep MACHINE $(BUILDDIR)/conf/local.conf | sed "s/.*\(imx6[a-z]*\).*
 SYSROOT ?= $(BUILDDIR)/tmp/sysroots/$(MACHINE)
 
 CC = $(PREFIX)/$(CROSS_COMPILE)gcc -march=armv7-a -mtune=cortex-a9 -mno-thumb-interwork -mfpu=neon -mfloat-abi=hard --sysroot $(SYSROOT)
-OBJECTS = gst_infoactive.o
+OBJECTS = gst-infoactive.o
 
-APP = gst_infoactive
+APP = gst-infoactive
 
 INC= -I$(SYSROOT)/usr/include/gstreamer-1.0 -I$(SYSROOT)/usr/include/glib-2.0 -I$(SYSROOT)/usr/lib/glib-2.0/include -I$(SYSROOT)/usr/lib/gstreamer-1.0/include
 LDADD = -lgstreamer-1.0 -lgobject-2.0 -lglib-2.0 -lpthread -lrt 

@@ -6,10 +6,10 @@ SYSROOT ?= $(BUILDDIR)/tmp/sysroots/$(MACHINE)
 
 CC = $(PREFIX)/$(CROSS_COMPILE)gcc -march=armv7-a -mtune=cortex-a9 -mno-thumb-interwork -mfpu=neon -mfloat-abi=hard --sysroot $(SYSROOT)
 
-OBJECTS = hmi_sbio.o
+OBJECTS = hmi-sbio.o
 OBJECTS_ASM =
 
-APP = hmi_sbio
+APP = hmi-sbio
 
 INC = -I../../gst-infoactive-1.0/linux-imx6yocto-armle-opengles_2.0-obj/include -I../../gst-infoactive-1.0/gst-src
 LDADD = -lgreio -lrt -lpthread 
